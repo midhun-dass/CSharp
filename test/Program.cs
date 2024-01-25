@@ -31,6 +31,8 @@ public class Program
         var countConsicutiveChar = CountConsicutiveChar("AABBCCADBB");
 
         var validPalindrom = IsPalindrome("ab2a");
+
+        var test = Test();
     }
 
     public static int Power(int a, int b)
@@ -504,6 +506,23 @@ public class Program
             r--;
         }
 
+
+        return true;
+    }
+
+    public static bool Test()
+    {
+        // temp will return true if the parse is successfull j return the parsed value.
+        // temp will return false if the parse if fail j return 0.
+        var temp = Int32.TryParse("-10 5", out int j);
+        if (temp)
+        {
+            Console.WriteLine(j);
+        }
+        else
+        {
+            Console.WriteLine("String could not be parsed.");
+        }
 
         return true;
     }
