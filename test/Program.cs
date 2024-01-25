@@ -29,6 +29,8 @@ public class Program
         var removeDuplicateChar1 = RemoveDuplicateChar1("aabbccaa");
 
         var countConsicutiveChar = CountConsicutiveChar("AABBCCADBB");
+
+        var validPalindrom = IsPalindrome("ab2a");
     }
 
     public static int Power(int a, int b)
@@ -476,5 +478,35 @@ public class Program
 
         return sb.ToString();
     }
+
+    public static bool IsPalindrome(string s) {
+        var temp = s.ToLower();
+        int l = 0;
+        int r = s.Length - 1;
+        if(s.Length == 0) {
+            return true;
+        } 
+
+        while (l < r)
+        {
+            while (l < r && (!(temp[l] >= 'a' && temp[l] <= 'z') && !(temp[l] >= '0' && temp[l] <= '9')))
+            {
+                l++;
+            }
+            while (l < r && (!(temp[r] >= 'a' && temp[r] <= 'z') && !(temp[r] >= '0' && temp[r] <= '9')))
+            {
+                r--;
+            }
+            
+            if (temp[l] != temp[r]) return false;
+            
+            l++;
+            r--;
+        }
+
+
+        return true;
+    }
+
 
 }
