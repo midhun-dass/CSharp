@@ -1,4 +1,6 @@
-﻿using ConsoleSingletonDI.Interface;
+﻿using System.Data.Common;
+using System.Text;
+using ConsoleSingletonDI.Interface;
 using ConsoleSingletonDI.ServiceLifeTimesRepository;
 using ConsoleSingletonDI.Singleton;
 using Microsoft.Data.SqlClient;
@@ -125,7 +127,9 @@ public class Program
         try
         {
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-            builder.ConnectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=EFCore;Integrated Security=True";
+            // builder.ConnectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=EFCore;Integrated Security=True";
+            
+            builder.ConnectionString = AddPooling("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=EFCore;Integrated Security=True");
 
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
@@ -156,6 +160,13 @@ public class Program
 
         Console.WriteLine("\nDone. Press enter.");
         Console.ReadLine();
+    }
+
+    public static string AddPooling(string connectionString)
+    {
+        StringBuilder builder = new StringBuilder(connectionString);
+        DbConnectionStringBuilder.AppendKeyValuePair(builder, "Pooling", "true");
+        return builder.ToString();
     }
 
 }
