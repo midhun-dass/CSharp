@@ -1,6 +1,7 @@
 ﻿using ConsoleSingletonDI.Interface;
 using ConsoleSingletonDI.ServiceLifeTimesRepository;
 using ConsoleSingletonDI.Singleton;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -10,10 +11,12 @@ public class Program
     {
         Console.WriteLine("Hello, World!");
 
-        var serviceProvider = ServiceLifeTimes();
-        DependencyInjectionExplained(serviceProvider);
+        // var serviceProvider = ServiceLifeTimes();
+        // DependencyInjectionExplained(serviceProvider);
 
-        SingletonExplained();
+        // SingletonExplained();
+
+        DbConnection();
 
     }
 
@@ -116,4 +119,43 @@ public class Program
         var counterValue4 = Singleton.Instance.counter;
         Console.WriteLine(counterValue4);
     }
+
+    public static void DbConnection()
+    {
+        try
+        {
+            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+            builder.ConnectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=EFCore;Integrated Security=True";
+
+            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            {
+                Console.WriteLine("\nQuery data example:");
+                Console.WriteLine("=========================================\n");
+
+                connection.Open();
+
+                string sql = "select id, name from users";
+
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Console.WriteLine("{0} : {1}", reader.GetInt32(0), reader.GetString(1));
+
+                        }
+                    }
+                }
+            }
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
+
+        Console.WriteLine("\nDone. Press enter.");
+        Console.ReadLine();
+    }
+
 }
