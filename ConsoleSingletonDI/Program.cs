@@ -1,5 +1,6 @@
 ﻿using ConsoleSingletonDI.Interface;
 using ConsoleSingletonDI.ServiceLifeTimesRepository;
+using ConsoleSingletonDI.Singleton;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -11,6 +12,8 @@ public class Program
 
         var serviceProvider = ServiceLifeTimes();
         DependencyInjectionExplained(serviceProvider);
+
+        SingletonExplained();
 
     }
 
@@ -89,5 +92,28 @@ public class Program
 
         Console.WriteLine("-----------------------consumer1---------------------------");
         consumer1?.DisplayNextId();
+    }
+
+    public static void SingletonExplained()
+    {
+        Console.WriteLine("----------------------------counterValue1---------------------");
+
+        var counterValue1 = Singleton.Instance.counter;
+        Console.WriteLine(counterValue1);
+
+        Console.WriteLine("----------------------------counterValue2---------------------");
+
+        var counterValue2 = Singleton.Instance.counter;
+        Console.WriteLine(counterValue2);
+
+        Console.WriteLine("----------------------------counterValue3---------------------");
+
+        var counterValue3 = Singleton.Instance.counter;
+        Console.WriteLine(counterValue3);
+
+        Console.WriteLine("----------------------------counterValue4---------------------");
+        
+        var counterValue4 = Singleton.Instance.counter;
+        Console.WriteLine(counterValue4);
     }
 }
