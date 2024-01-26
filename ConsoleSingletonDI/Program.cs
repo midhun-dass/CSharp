@@ -9,6 +9,13 @@ public class Program
     {
         Console.WriteLine("Hello, World!");
 
+        var serviceProvider = ServiceLifeTimes();
+        DependencyInjectionExplained(serviceProvider);
+
+    }
+
+    public static ServiceProvider ServiceLifeTimes()
+    {
         // var serviceProvider = new ServiceCollection()
         //     .AddTransient<IGenerator, Generator>()
         //     .AddTransient<IConsumer, Consumer>()
@@ -54,6 +61,10 @@ public class Program
             .AddTransient<IConsumer, Consumer>()
             .BuildServiceProvider();
 
+        return serviceProvider;
+    }
+    public static void DependencyInjectionExplained(ServiceProvider serviceProvider)
+    {
         Console.WriteLine("--------------------consumer------------------------------");
         var consumer = serviceProvider.GetService<IConsumer>();
         consumer?.DisplayNextId();
@@ -78,6 +89,5 @@ public class Program
 
         Console.WriteLine("-----------------------consumer1---------------------------");
         consumer1?.DisplayNextId();
-
     }
 }
