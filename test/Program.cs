@@ -4,35 +4,43 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        var power = Power(2, 10);
-        Console.WriteLine("##################" + power);
+        // var power = Power(2, 10);
+        // Console.WriteLine("##################" + power);
 
-        var sumUptoN = SumUptoN(5);
-        Console.WriteLine("##################" + sumUptoN);
+        // var sumUptoN = SumUptoN(5);
+        // Console.WriteLine("##################" + sumUptoN);
 
-        var factorial = Factorial(5);
-        Console.WriteLine("##################" + factorial);
+        // var factorial = Factorial(5);
+        // Console.WriteLine("##################" + factorial);
 
-        var fibonacci = Fibonacci(9);
-        Console.WriteLine("##################" + fibonacci);
+        // var fibonacci = Fibonacci(9);
+        // Console.WriteLine("##################" + fibonacci);
 
-        var longestCommonPrefix = LongestCommonPrefix(new string[]{"flower","flow","flight"});
+        // var longestCommonPrefix = LongestCommonPrefix(new string[]{"flower","flow","flight"});
 
         var groupAnagrams = GroupAnagrams1(new string[]{"eat","tea","tan","ate","nat","bat"});
 
-        var reverseString = ReverseString("Hellow World");
+        // var reverseString = ReverseString("Hellow World");
 
-        var reverseWords = ReverseWords("a good   example");
+        // var reverseWords = ReverseWords("a good   example");
 
-        var removeDuplicateChar = RemoveDuplicateChar("aabbccaa");
+        // var removeDuplicateChar = RemoveDuplicateChar("aabbccaa");
 
-        var removeDuplicateChar1 = RemoveDuplicateChar1("aabbccaa");
+        // var removeDuplicateChar1 = RemoveDuplicateChar1("aabbccaa");
 
-        var countConsicutiveChar = CountConsicutiveChar("AABBCCADBB");
+        // var countConsicutiveChar = CountConsicutiveChar("AABBCCADBB");
 
-        var validPalindrom = IsPalindrome("ab2a");
+        // var validPalindrom = IsPalindrome("ab2a");
 
-        var test = Test();
+        // var test = Test();
+
+        var reomveSpaceInString = ReomveSpaceInString(" Hellow World");
+
+        var revserseWordsInString = RevserseWordsInString(" Hellow World");
+
+        var fascinating = Fascinating(192);
+
+        TestString();
     }
 
     public static int Power(int a, int b)
@@ -526,6 +534,161 @@ public class Program
 
         return true;
     }
+
+
+    public static string ReomveSpaceInString(string str)
+    {
+        if (str == null || str.Length < 2) return str;
+
+        int i = 0;
+        int j = 0;
+        string res = "";
+
+        while (i < str.Length && j <= i)
+        {
+            while (j < str.Length && !((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z'))) {
+                j++;
+                i++;
+            }
+
+            while (i < str.Length && ((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z'))) 
+            {
+                i++;
+            }
+
+            res += str[j..i];
+            // res += str.Substring(j, i - j);
+            j = i;
+        }
+
+        return res;
+    }
+
+    public static string RevserseWordsInString(string str)
+    {
+        if (str == null || str.Length < 2) return str;
+
+        int i = 0;
+        int j = 0;
+        string res = "";
+
+        while (i < str.Length && j <= i)
+        {
+            while (j < str.Length && !((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z'))) {
+                j++;
+                i++;
+            }
+
+            while (i < str.Length && ((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z'))) i++;
+
+            int k = j;
+            int l = i;
+            while (k <= l)
+            {
+                res += str[--l];
+            }
+            j = i;
+        }
+
+        return res.TrimEnd();
+    }
+
+
+    public static bool Fascinating(int n)
+    {
+        if (n.ToString().Length < 3) return false;
+        
+        var p1 = n * 2;
+        var p2 = n * 3;
+        
+        var res = n.ToString() + p1.ToString() + p2.ToString();
+
+        if (res.Length != 9) return false;
+
+        if (res.Length == 9)
+        {
+            HashSet<char> set = new HashSet<char>(res);
+            if (set.Count() != 9) return false;
+
+            foreach(char c in res)
+            {
+                if (c == '0') return false;
+            }
+        }
+        
+        return true;
+    }
+
+    public static void TestString()
+    {
+        string test = "HellowWorld";
+        string test1 = "";
+        string test2 = "Hellow&World";
+        StringBuilder stringBuilder = new StringBuilder("Hellow World");
+        
+        var res1 = test
+            .ToLower()
+            .All(c => ((c >= 'a' && c <= 'z') || (c >= '0' && c <= '9')));
+        var res2 = test1
+            .ToLower()
+            .All(c => ((c >= 'a' && c <= 'z') || (c >= '0' && c <= '9')));
+        var res3 = test2
+            .ToLower()
+            .All(c => ((c >= 'a' && c <= 'z') || (c >= '0' && c <= '9')));
+
+        var res4 = test2.Any(c => c == '&');
+
+        var res5 = test.Contains('&');
+        
+        var res6 = "AAAbbbaaaBBB".Distinct();
+
+        var res7 = test.IndexOf('&');
+        var res8 = test2.IndexOf('&');
+
+        int[] ints = new int[]{1, 2, 3, 4};
+        
+        int length = ints.Length;
+        int length1 = ints.Count();
+
+        int ln = test.Length;
+        int ln1 = test.Count();
+    }
+
+    public static int[] Rotate(int[] nums, int k) 
+    {
+        int l = 0;
+        int r = nums.Length - 1;
+
+        k = k % nums.Length;
+
+        while (l < r)
+        {
+            int temp = nums[l];
+            nums[l++] = nums[r];
+            nums[r--] = temp;
+        }
+
+        l = 0;
+        r = k - 1;
+        while (l < r)
+        {
+            int temp = nums[l];
+            nums[l++] = nums[r];
+            nums[r--] = temp;
+        }
+
+        l = k;
+        r = nums.Length - 1;
+        while (l < r)
+        {
+            int temp = nums[l];
+            nums[l++] = nums[r];
+            nums[r--] = temp;
+        }
+
+        return nums;
+    }
+
 
 
 }
